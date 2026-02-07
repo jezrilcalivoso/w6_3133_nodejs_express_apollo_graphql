@@ -9,23 +9,12 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 //mongoDB Atlas Connection String
-const mongodb_atlas_url = process.env.MONGODB_URL;
+const DB_CONNECTION = `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASSWORD}@cluster0.${process.env.CLUSTER_ID}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
 
 //TODO - Replace you Connection String here
 const connectDB = async() => {
-    try{
-      mongoose.connect(mongodb_atlas_url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      }).then(success => {
-        console.log('Success Mongodb connection')
-      }).catch(err => {
-        console.log('Error Mongodb connection')
-      });
-    } catch(error) {
-        console.log(`Unable to connect to DB : ${error.message}`);
-      }
-  }
+    await mongoose.connect(DB_CONNECTION)
+}
 
 //Define Apollo Server
 
@@ -41,5 +30,10 @@ app.use('*', cors());
 //Start listen 
 app.listen({ port: process.env.PORT }, () => {  
   console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
-  connectDB()
+  try {
+      connectDB()
+      console.log('Connected to MongoDB Atlas');
+  } catch (error) {
+    console.log(`Unable to connect to DB : ${error.message}`);
+  }
 });
