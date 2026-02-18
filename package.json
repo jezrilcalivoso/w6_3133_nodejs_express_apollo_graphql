@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pritamworld/w7_3133_nodejs_express_apollo_graphql.git"
+    "url": "git+https://github.com/jezrilcalivoso/w6_3133_nodejs_express_apollo_graphql"
   },
   "keywords": [
     "mongoose",
